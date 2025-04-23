@@ -1,20 +1,20 @@
-# Copyright (c) HashiCorp, Inc.
-# SPDX-License-Identifier: MPL-2.0
+# # Copyright (c) HashiCorp, Inc.
+# # SPDX-License-Identifier: MPL-2.0
 
-# Issue where non-existent namespace does not result in
-# failure behavior.
-# https://github.com/terraform-providers/terraform-provider-helm/issues/427
+# # Issue where non-existent namespace does not result in
+# # failure behavior.
+# # https://github.com/terraform-providers/terraform-provider-helm/issues/427
 
-resource "kubernetes_namespace" "secrets" {
-  metadata {
-    annotations = {
-      name = var.namespace
-    }
+# resource "kubernetes_namespace" "secrets" {
+#   metadata {
+#     annotations = {
+#       name = var.namespace
+#     }
 
-    labels = {
-      purpose = "consul"
-    }
+#     labels = {
+#       purpose = "consul"
+#     }
 
-    name = var.namespace
-  }
-}
+#     name = var.namespace
+#   }
+# }
