@@ -16,15 +16,21 @@ variable "namespace" {
 variable "cluster_workspace" {
   type        = string
   description = "Workspace that created the Kubernetes cluster"
+  default     = "pipelines-k8s"
 }
 
 variable "organization" {
   type        = string
   description = "Organization of workspace that created the Kubernetes cluster"
+  default     = "zach-allen"
 }
 
 variable "replicas" {
   type        = number
   default     = 1
   description = "Number of consul replicas"
+}
+
+variable "gcp_creds" {
+  type = string
 }

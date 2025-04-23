@@ -2,6 +2,12 @@
 # SPDX-License-Identifier: MPL-2.0
 
 terraform {
+  cloud {
+    workspaces {
+      name = "pipelines-consul"
+      project = "sandbox"
+    }
+  }
   required_providers {
     helm = {
       source  = "hashicorp/helm"
@@ -33,6 +39,7 @@ data "tfe_outputs" "cluster" {
 provider "google" {
   project = data.tfe_outputs.cluster.values.project_id
   region  = data.tfe_outputs.cluster.values.region
+  credentials = var.gcp_creds
 }
 
 data "google_client_config" "default" {}
