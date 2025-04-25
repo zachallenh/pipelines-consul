@@ -34,4 +34,4 @@ variable "replicas" {
 variable "gcp_creds" {
   type = string
   default = null
-}
+} 

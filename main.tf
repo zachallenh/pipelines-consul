@@ -33,31 +33,27 @@ data "tfe_outputs" "cluster" {
   workspace    = var.cluster_workspace
 }
 
-resource "terraform_data" "output" {
-  input = data.tfe_outputs.cluster
+
+# Retrieve GKE cluster information
+provider "google" {
+  project = data.tfe_outputs.cluster.values.project_id
+  region  = data.tfe_outputs.cluster.values.region
 }
 
+data "google_client_config" "default" {}
 
-# # Retrieve GKE cluster information
-# provider "google" {
-#   project = "hc-a5efd9dda7c242dd9e8ffe9136a"#data.tfe_outputs.cluster.values.project_id
-#   region  = "us-central1"#data.tfe_outputs.cluster.values.region
-# }
+provider "kubernetes" {
+  host                   = "https://${data.tfe_outputs.cluster.values.host}"
+  token                  = data.google_client_config.default.access_token
+  cluster_ca_certificate = data.tfe_outputs.cluster.values.cluster_ca_certificate
 
-# data "google_client_config" "default" {}
+}
 
-# provider "kubernetes" {
-#   host                   = "https://${data.tfe_outputs.cluster.values.host}"
-#   token                  = data.google_client_config.default.access_token
-#   cluster_ca_certificate = data.tfe_outputs.cluster.values.cluster_ca_certificate
+provider "helm" {
+  kubernetes {
+    host                   = data.tfe_outputs.cluster.values.host
+    token                  = data.google_client_config.default.access_token
+    cluster_ca_certificate = data.tfe_outputs.cluster.values.cluster_ca_certificate
 
-# }
-
-# provider "helm" {
-#   kubernetes {
-#     host                   = data.tfe_outputs.cluster.values.host
-#     token                  = data.google_client_config.default.access_token
-#     cluster_ca_certificate = data.tfe_outputs.cluster.values.cluster_ca_certificate
-
-#   }
-# }
+  }
+}
