@@ -5,16 +5,16 @@
 # # failure behavior.
 # # https://github.com/terraform-providers/terraform-provider-helm/issues/427
 
-# resource "kubernetes_namespace" "secrets" {
-#   metadata {
-#     annotations = {
-#       name = var.namespace
-#     }
+resource "kubernetes_namespace" "secrets" {
+  metadata {
+    annotations = {
+      name = var.namespace
+    }
 
-#     labels = {
-#       purpose = "consul"
-#     }
+    labels = {
+      purpose = "consul"
+    }
 
-#     name = var.namespace
-#   }
-# }
+    name = var.namespace
+  }
+}
